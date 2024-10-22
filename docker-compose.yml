@@ -1,0 +1,29 @@
+services:
+  db:
+    image: mysql:latest
+    container_name: sap_mysql_container
+    environment:
+      MYSQL_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: root
+      GDATA: /var/lib/mysql/data
+      MYSQL_DATABASE: library_management
+    volumes:
+      - mysql:/data/mysql
+    ports:
+      - 3306:3306
+    networks:
+          - spring-demo
+    restart: unless-stopped
+
+  mail-dev:
+    container_name: mail-dev-bsn
+    image: maildev/maildev
+    ports:
+      - 1080:1080
+      - 1025:1025
+networks:
+    spring-demo:
+      driver: bridge
+volumes:
+    mysql:
+      driver: local
